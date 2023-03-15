@@ -1,0 +1,26 @@
+PODS:
+  - MTSDK (4.0.2)
+  - Realm (10.36.0):
+    - Realm/Headers (= 10.36.0)
+  - Realm/Headers (10.36.0)
+  - RealmSwift (10.36.0):
+    - Realm (= 10.36.0)
+
+DEPENDENCIES:
+  - MTSDK
+  - RealmSwift
+
+SPEC REPOS:
+  trunk:
+    - MTSDK
+    - Realm
+    - RealmSwift
+
+SPEC CHECKSUMS:
+  MTSDK: c8ed8a344627e1059a5aa4f1a329de0039fd6f1b
+  Realm: 3fd136cb4c83a927482a7f1612496d37beed3cf5
+  RealmSwift: 513d4dcbf5bfc4d573454088b592685fc48dd716
+
+PODFILE CHECKSUM: f180804a28dddbed247b9c7882fc0ff32ec82af4
+
+COCOAPODS: 1.12.0
