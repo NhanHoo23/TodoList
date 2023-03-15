@@ -71,7 +71,7 @@ extension TaskDetailViewController {
         self.saveTask()
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {return .lightContent}
+    override var preferredStatusBarStyle: UIStatusBarStyle {return .darkContent}
 }
 
 //MARK: SetupView
@@ -107,6 +107,7 @@ extension TaskDetailViewController {
                 $0.leading.equalTo(checkBt.snp.trailing).offset(16)
             }
             $0.text = self.taskModel.task
+            $0.textColor = Color.textColor
         }
         
         UIView() >>> view >>> {
@@ -201,6 +202,7 @@ extension TaskDetailViewController {
             }
             let timeCreate = "\(timeAgo.isEmpty ? "Just now" : timeAgo)"
             $0.text = "Create \(timeCreate)"
+            $0.textColor = Color.textColor
         }
         
         noteView >>> view >>> {
@@ -214,6 +216,7 @@ extension TaskDetailViewController {
             } else {
                 $0.text = self.taskModel.note
             }
+            $0.textColor = Color.textColor
             $0.numberOfLines = 0
             $0.isUserInteractionEnabled = true
             $0.tapHandle {

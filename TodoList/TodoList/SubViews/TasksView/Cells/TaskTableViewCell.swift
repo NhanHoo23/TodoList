@@ -108,6 +108,7 @@ extension TaskTableViewCell {
                 $0.leading.equalTo(checkImg.snp.trailing).offset(16)
             }
             $0.font = UIFont(name: FNames.regular, size: 18)
+            $0.textColor = Color.textColor
         }
         
         calendarImg >>> containerView >>> {
@@ -126,6 +127,7 @@ extension TaskTableViewCell {
                 $0.leading.equalTo(calendarImg.snp.trailing).offset(8)
             }
             $0.font = UIFont(name: FNames.regular, size: 18)
+            $0.textColor = Color.textColor
         }
         
         noteImg >>> containerView >>> {

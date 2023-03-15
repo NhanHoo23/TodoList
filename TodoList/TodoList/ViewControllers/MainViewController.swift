@@ -57,7 +57,7 @@ extension MainViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {return .lightContent}
+    override var preferredStatusBarStyle: UIStatusBarStyle {return .darkContent}
 }
 
 //MARK: SetupView

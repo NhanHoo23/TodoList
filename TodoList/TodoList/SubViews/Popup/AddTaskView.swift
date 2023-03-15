@@ -137,6 +137,7 @@ extension AddTaskView {
                 $0.leading.equalTo(calendarImg.snp.trailing).offset(0)
             }
             $0.text = ""
+            $0.textColor = Color.textColor
         }
         
         cancelDate >>> calendarBt >>> {
@@ -181,6 +182,7 @@ extension AddTaskView {
                 $0.width.equalTo(0)
             }
             $0.text = ""
+            $0.textColor = Color.textColor
             $0.numberOfLines = 2
             $0.adjustsFontSizeToFitWidth = true
         }
@@ -239,6 +241,7 @@ extension AddTaskView {
                 $0.leading.equalTo(noteImg.snp.trailing).offset(0)
             }
             $0.text = ""
+            $0.textColor = Color.textColor
         }
         
         cancelNote >>> noteBt >>> {
@@ -304,7 +307,7 @@ extension AddTaskView {
             $0.delegate = self
             $0.returnKeyType = .done
             $0.textColor = .black
-            $0.placeholder = "Add a Task"
+            $0.attributedPlaceholder = NSAttributedString(string: "Add a Task", attributes: [NSAttributedString.Key.foregroundColor: UIColor.from("7F7F7F")])
         }
         
         colorView >>> self >>> {
@@ -317,8 +320,8 @@ extension AddTaskView {
             $0.doneHandle = {color in
                 self.taskViewModel.tagColor = color.color
                 self.isSelectedColor = false
-                self.tagBt.tintColor = color.color == "none" ? .clear : .white
-                self.tagBt.backgroundColor = color.color == "none" ? .black : .from(color.color)
+                self.tagBt.tintColor = color.color == "none" ? .black : .white
+                self.tagBt.backgroundColor = color.color == "none" ? .clear : .from(color.color)
             }
         }
     }
@@ -339,6 +342,7 @@ extension AddTaskView {
         self.updateNote(showNote: false)
         self.pinBt.setImage(UIImage(systemName: "pin"), for: .normal)
         self.tagBt.tintColor = .black
+        self.tagBt.backgroundColor = .clear
         self.textInput.text = ""
     }
     
@@ -365,7 +369,7 @@ extension AddTaskView {
                 self.containerView.snp.updateConstraints {
                     $0.bottom.equalToSuperview().offset(-keyboardHeight)
                 }
-                UIView.animate(withDuration: 0.45, delay: 0, options: .curveEaseOut, animations: {
+                UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: {
                     self.layoutIfNeeded()
                 }, completion: {_ in
                     
@@ -374,7 +378,7 @@ extension AddTaskView {
                 self.isSelectedColor = false
                 self.isSelectedPin = false
                 self.containerView.snp.updateConstraints {
-                    $0.bottom.equalToSuperview().offset(ItemSize.addTaskViewHeight)
+                    $0.bottom.equalToSuperview().offset(ItemSize.addTaskViewHeight + 10)
                 }
                 UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                     self.layoutIfNeeded()

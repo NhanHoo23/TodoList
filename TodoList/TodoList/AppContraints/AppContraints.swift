@@ -9,7 +9,8 @@ import MTSDK
 
 struct Color {
     static let mainBackground: UIColor = .from("F4E2C6")
-    static let popupColor: UIColor = .from("E2E2E2")
+    static let popupColor: UIColor = .from("F2F6F5")
+    static let textColor: UIColor = .black
 }
 
 struct FNames {

@@ -64,6 +64,7 @@ extension NoteViewController {
                 $0.top.equalToSuperview().offset(16)
             }
             $0.text = "Note"
+            $0.textColor = Color.textColor
             $0.font = UIFont(name: FNames.medium, size: 18)
         }
         
@@ -114,6 +115,8 @@ extension NoteViewController {
                 $0.trailing.equalToSuperview().offset(-16)
                 $0.bottom.equalTo(textOptions.snp.top)
             }
+            $0.backgroundColor = .clear
+            $0.textColor = Color.textColor
             $0.font = self.selectedFont
             $0.becomeFirstResponder()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {

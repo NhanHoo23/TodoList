@@ -63,6 +63,7 @@ extension CustomView {
                 $0.leading.equalTo(imgView.snp.trailing).offset(16)
                 $0.centerY.equalTo(imgView)
             }
+            $0.textColor = Color.textColor
         }
         
         self.tapHandle {

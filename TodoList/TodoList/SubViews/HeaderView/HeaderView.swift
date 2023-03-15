@@ -97,6 +97,7 @@ extension HeaderView {
                 $0.top.equalToSuperview().offset(4)
             }
             $0.text = self.vm.sortType
+            $0.textColor = Color.textColor
         }
     }
 }

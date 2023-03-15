@@ -76,6 +76,7 @@ extension DatePickerView {
                 $0.leading.trailing.equalToSuperview()
                 $0.height.equalTo(350)
             }
+            $0.overrideUserInterfaceStyle = .light
             $0.backgroundColor = .clear
             $0.tintColor = .black
             $0.datePickerMode = .date
@@ -202,8 +203,10 @@ extension DatePickerView {
                 $0.bottom.equalTo(self.snp.bottom)
             }
             
-            UIView.animate(withDuration: 0.4, animations: {
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.layoutIfNeeded()
+            }, completion: {_ in
+                
             })
         } else {
             self.gradientView.alpha = 0
