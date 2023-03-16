@@ -115,6 +115,7 @@ extension MainViewController {
                              timePickerView: self.tasksView.timePickerView ,
                              doneHandle: {taskModel in
             MainViewController.vm.updateTaskCheck(true, taskModel, self.tasksView.tasksTableView, completion: {
+                self.tasksView.updateTableViewHeight()
                 self.localNoti()
             })
         })
@@ -136,6 +137,7 @@ extension MainViewController {
 extension MainViewController: TaskDetailViewControllerDelegate {
     func updateTask(taskModel: TaskModel) {
         MainViewController.vm.updateTaskCheck(false, taskModel, self.tasksView.tasksTableView, completion: {
+            self.tasksView.tasksTableView.reloadData()
             self.localNoti()
         })
     }

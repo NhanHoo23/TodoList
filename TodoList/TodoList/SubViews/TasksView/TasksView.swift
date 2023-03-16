@@ -60,11 +60,12 @@ extension TasksView {
             $0.backgroundColor = .gray
         }
         
+        let tableViewHeight = self.vm.tasks.count * 70
         tasksTableView >>> self >>> {
             $0.snp.makeConstraints {
                 $0.top.equalTo(headerCollection.snp.bottom).offset(1)
                 $0.leading.trailing.equalToSuperview()
-                $0.bottom.equalToSuperview()
+                $0.height.equalTo(tableViewHeight)
             }
             $0.backgroundColor = .clear
             $0.dataSource = self
@@ -72,18 +73,9 @@ extension TasksView {
             $0.registerReusedCell(TaskTableViewCell.self)
             $0.showsVerticalScrollIndicator = false
             $0.separatorStyle = .none
-            $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: botSafeHeight + 150, right: 0)
+            $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         
-        
-//        completeView >>> self >>> {
-//            $0.snp.makeConstraints {
-//                $0.top.equalTo(tasksTableView.snp.bottom).offset(-140)
-//                $0.leading.equalToSuperview().offset(PaddingScreen.topLeft)
-//                $0.width.equalTo(110)
-//                $0.height.equalTo(30)
-//            }
-//        }
     }
 }
 
@@ -140,7 +132,8 @@ extension TasksView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusable(cellClass: TaskTableViewCell.self, indexPath: indexPath)
-        cell.configsCell(task: vm.tasks[indexPath.row])
+        let taskDoneCount = vm.tasks.filter({$0.doneCheck}).count
+        cell.configsCell(task: vm.tasks[indexPath.row], taskDoneCount: taskDoneCount)
         cell.delegate = self
         cell.selectionStyle = .none
         
@@ -152,20 +145,21 @@ extension TasksView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == self.vm.tasks.count - 1 {
+            return 
+        }
+        
         let taskModel = self.vm.tasks[indexPath.item]
         if let pushVC = self.pushViewController {
             pushVC(taskModel)
         }
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        self.vm.selectedTaskIndexPath = indexPath
-        if editingStyle == .delete {
-            self.vm.deleteTask(self.vm.tasks[indexPath.row], self.tasksTableView)
-        }
-    }
-    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if indexPath.row == self.vm.tasks.count - 1 {
+            return UISwipeActionsConfiguration(actions: [])
+        }
+        
         self.vm.selectedTaskIndexPath = indexPath
         let delete = UIContextualAction(style: .destructive, title: "Delete", handler: {_, _, _ in
             self.vm.deleteTask(self.vm.tasks[indexPath.row], self.tasksTableView)
@@ -193,8 +187,21 @@ extension TasksView: TaskTableViewCellDelegate {
             return
         }
         
-        vm.tasks[indexPath.row].doneCheck.toggle()
-        vm.updateTaskCheck(false, vm.tasks[indexPath.row], tasksTableView)
+        
+        let taskModel = vm.tasks[indexPath.row]
+        let lastTaskModel = vm.tasks[vm.tasks.count - 1]
+        taskModel.doneCheck.toggle()
+        let taskDoneCount = vm.tasks.filter({$0.doneCheck}).count
+        let index = IndexPath(row: vm.tasks.count - 1, section: 0)
+        vm.updateTaskCheck(false, vm.tasks[indexPath.row], tasksTableView, completion: {
+            if let cell = self.tasksTableView.cellForRow(at: indexPath) as? TaskTableViewCell {
+                cell.updateUI(taskModel: taskModel)
+            }
+            
+            if let cell = self.tasksTableView.cellForRow(at: index) as? TaskTableViewCell {
+                cell.showCompleteView(taskModel: lastTaskModel, count: taskDoneCount)
+            }
+        })
     }
     
     
@@ -214,5 +221,15 @@ extension TasksView {
                 }
             })
         }
+    }
+    
+    func updateTableViewHeight() {
+        let tableViewHeight = self.vm.tasks.count * 70
+        tasksTableView.snp.remakeConstraints {
+            $0.top.equalTo(headerCollection.snp.bottom).offset(1)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(tableViewHeight)
+        }
+        
     }
 }

@@ -22,6 +22,8 @@ class MainViewModel {
     
     //taskList
     var tasks: [TaskModel] = []
+    var tasksDone: [TaskModel] = []
+    var taskNotDone: [TaskModel] = []
     var selectedTaskIndexPath: IndexPath = IndexPath(item: 0, section: 0)
     
 }
@@ -91,7 +93,10 @@ extension MainViewModel {
                     self.tasks[index] = task
                 }
 //                self.sortTasks()
-                tableView.reloadData()
+//                tableView.reloadData()
+                if let completion = completion {
+                    completion()
+                }
             }
                     
             let realmModel = RealmTaksModel(from: task)
@@ -117,9 +122,13 @@ extension MainViewModel {
         let groupArr = groupObject.compactMap({GroupModel(from: $0)})
         self.groups.insert(contentsOf: groupArr, at: self.groups.count - 1)
         
-        let taskObject = RealmDB.shared.getObjects(type: RealmTaksModel.self)
-        let taskArr = taskObject.compactMap({TaskModel(from: $0)})
+        let tasksObject = RealmDB.shared.getObjects(type: RealmTaksModel.self)
+        let taskArr = tasksObject.compactMap({TaskModel(from: $0)})
         self.tasks = taskArr.reversed()
+        self.tasks.append(TaskModel())
+        
+        self.tasksDone = self.tasks.filter({$0.doneCheck})
+        self.taskNotDone = self.tasks.filter({$0.doneCheck == false})
 //        self.sortTasks()
     }
 }

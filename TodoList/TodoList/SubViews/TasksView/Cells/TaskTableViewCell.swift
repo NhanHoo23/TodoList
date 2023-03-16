@@ -26,20 +26,26 @@ class TaskTableViewCell: UITableViewCell {
     let noteImg = UIImageView()
     let bellImg = UIImageView()
     let pinImg = UIImageView()
+    let horizolView = UIView()
+    let completeView = CompleteView()
     
+    var taskModel: TaskModel!
     var delegate: TaskTableViewCellDelegate?
 }
 
 
 //MARK: Functions
 extension TaskTableViewCell {
-    func configsCell(task: TaskModel) {
+    func configsCell(task: TaskModel, taskDoneCount: Int) {
+        self.taskModel = task
         if containerView == nil {
             self.setupView()
         }
         
         self.configUI(task: task)
+        self.updateUI(taskModel: task)
         self.showIcon(noteString: task.note, time: task.time)
+        self.showCompleteView(taskModel: task, count: taskDoneCount)
     }
     
     private func setupView() {
@@ -56,7 +62,7 @@ extension TaskTableViewCell {
             }
         }
         
-        UIView() >>> containerView >>> {
+        horizolView >>> containerView >>> {
             $0.snp.makeConstraints {
                 $0.bottom.equalToSuperview()
                 $0.leading.equalToSuperview().offset(10)
@@ -147,17 +153,84 @@ extension TaskTableViewCell {
             $0.contentMode = .scaleAspectFit
             $0.image = UIImage(named: "img_pin")
         }
+        
+        completeView >>> containerView >>> {
+            $0.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.leading.equalToSuperview().offset(PaddingScreen.topLeft)
+                $0.width.equalTo(110)
+                $0.height.equalTo(30)
+            }
+            $0.disable(alpha: 0)
+        }
+    }
+    
+    func updateUI(taskModel: TaskModel) {
+        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: taskModel.task)
+        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
+        if taskModel.doneCheck {
+            taskName.attributedText = attributeString
+            checkImg.image = UIImage(systemName: "checkmark.circle.fill")
+        } else {
+            attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSMakeRange(0, attributeString.length))
+            taskName.attributedText = attributeString
+            checkImg.image = UIImage(systemName: "circle")
+        }
+        
+        if taskModel.task == "" {
+            self.checkImg.isHidden = true
+            self.taskName.isHidden = true
+            self.taskDate.isHidden = true
+            self.calendarImg.isHidden = true
+            self.noteImg.isHidden = true
+            self.bellImg.isHidden = true
+            self.lineTag.isHidden = true
+            self.horizolView.isHidden = true
+        } else {
+            self.checkImg.isHidden = false
+            self.taskName.isHidden = false
+            self.taskDate.isHidden = false
+            self.calendarImg.isHidden = false
+            self.noteImg.isHidden = false
+            self.bellImg.isHidden = false
+            self.lineTag.isHidden = false
+            self.horizolView.isHidden = false
+        }
+        self.showIcon(noteString: taskModel.note, time: taskModel.time)
+        
+    }
+    
+    func showCompleteView(taskModel: TaskModel, count: Int) {
+        if taskModel.task != "" {
+            self.completeView.disable(alpha: 0)
+        } else {
+            if count > 0 {
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.completeView.enable()
+                })
+            } else {
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.completeView.disable(alpha: 0)
+                }, completion: { _ in
+                    self.completeView.isSelected = false
+                })
+            }
+        }
     }
     
     func configUI(task: TaskModel) {
         lineTag.backgroundColor = task.tagColor == TagColor.none.color ? .clear : .from(task.tagColor)
-        taskDate.text = task.date.getFormattedDate(format: "E, d MMM")
         pinImg.isHidden = !task.pin
         
-        if !checkDay(task.date) {
-            taskDate.textColor = .red
+        if task.date == nil {
+            taskDate.text  = ""
         } else {
-            taskDate.textColor = Color.textColor
+            taskDate.text = task.date.getFormattedDate(format: "E, d MMM")
+            if !checkDay(task.date) {
+                taskDate.textColor = .red
+            } else {
+                taskDate.textColor = Color.textColor
+            }
         }
         
         let currentDate = Date().timeIntervalSince1970
@@ -168,17 +241,6 @@ extension TaskTableViewCell {
                 bellImg.tintColor = .black
             }
         }        
-        
-        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: task.task)
-        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
-        if task.doneCheck {
-            taskName.attributedText = attributeString
-            checkImg.image = UIImage(systemName: "checkmark.circle.fill")
-        } else {
-            attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSMakeRange(0, attributeString.length))
-            taskName.attributedText = attributeString
-            checkImg.image = UIImage(systemName: "circle")
-        }
     }
     
     func showIcon(noteString: String, time: Date? = nil) {
