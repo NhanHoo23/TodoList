@@ -37,38 +37,9 @@ extension TaskTableViewCell {
         if containerView == nil {
             self.setupView()
         }
-        lineTag.backgroundColor = task.tagColor == TagColor.none.color ? .clear : .from(task.tagColor)
-        taskDate.text = task.date.getFormattedDate(format: "E, d MMM")
         
-        if !checkDay(task.date) {
-            taskDate.textColor = .red
-        } else {
-            taskDate.textColor = Color.textColor
-        }
-        
-        let currentDate = Date().timeIntervalSince1970
-        if let time = task.time {
-            if currentDate - time.timeIntervalSince1970 > 0 {
-                bellImg.tintColor = .red
-            } else {
-                bellImg.tintColor = .black
-            }
-        }
-        
+        self.configUI(task: task)
         self.showIcon(noteString: task.note, time: task.time)
-        pinImg.isHidden = !task.pin
-        
-        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: task.task)
-        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
-        if task.doneCheck {
-            taskName.attributedText = attributeString
-            checkImg.image = UIImage(systemName: "checkmark.circle.fill")
-        } else {
-            attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSMakeRange(0, attributeString.length))
-            taskName.attributedText = attributeString
-            checkImg.image = UIImage(systemName: "circle")
-        }
-        
     }
     
     private func setupView() {
@@ -175,6 +146,38 @@ extension TaskTableViewCell {
             }
             $0.contentMode = .scaleAspectFit
             $0.image = UIImage(named: "img_pin")
+        }
+    }
+    
+    func configUI(task: TaskModel) {
+        lineTag.backgroundColor = task.tagColor == TagColor.none.color ? .clear : .from(task.tagColor)
+        taskDate.text = task.date.getFormattedDate(format: "E, d MMM")
+        pinImg.isHidden = !task.pin
+        
+        if !checkDay(task.date) {
+            taskDate.textColor = .red
+        } else {
+            taskDate.textColor = Color.textColor
+        }
+        
+        let currentDate = Date().timeIntervalSince1970
+        if let time = task.time {
+            if currentDate - time.timeIntervalSince1970 > 0 {
+                bellImg.tintColor = .red
+            } else {
+                bellImg.tintColor = .black
+            }
+        }        
+        
+        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: task.task)
+        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
+        if task.doneCheck {
+            taskName.attributedText = attributeString
+            checkImg.image = UIImage(systemName: "checkmark.circle.fill")
+        } else {
+            attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSMakeRange(0, attributeString.length))
+            taskName.attributedText = attributeString
+            checkImg.image = UIImage(systemName: "circle")
         }
     }
     

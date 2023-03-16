@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		72149E2329C2C6E2002FA8A9 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72149E2229C2C6E2002FA8A9 /* LocalNotification.swift */; };
+		72149E2929C30615002FA8A9 /* CompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72149E2829C30615002FA8A9 /* CompleteView.swift */; };
 		72225BB329B865F1000D3CA0 /* DateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72225BB229B865F1000D3CA0 /* DateExt.swift */; };
 		72225BB629B8670A000D3CA0 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72225BB529B8670A000D3CA0 /* AddTaskView.swift */; };
 		72225BB829B871CA000D3CA0 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72225BB729B871CA000D3CA0 /* UIViewControllerExt.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		72149E2229C2C6E2002FA8A9 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
+		72149E2829C30615002FA8A9 /* CompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteView.swift; sourceTree = "<group>"; };
 		72225BB229B865F1000D3CA0 /* DateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExt.swift; sourceTree = "<group>"; };
 		72225BB529B8670A000D3CA0 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
 		72225BB729B871CA000D3CA0 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
@@ -110,6 +112,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		72149E2729C305FC002FA8A9 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				72F8F20329C086C900573D0A /* CustomView.swift */,
+				72149E2829C30615002FA8A9 /* CompleteView.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		72225BB429B866AB000D3CA0 /* Popup */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,7 +225,7 @@
 				72225BB429B866AB000D3CA0 /* Popup */,
 				7263C20A29B842D1009E799C /* HeaderView */,
 				7263C20B29B842DE009E799C /* TasksView */,
-				72F8F20329C086C900573D0A /* CustomView.swift */,
+				72149E2729C305FC002FA8A9 /* CustomView */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -468,6 +479,7 @@
 				723787F129B6DDCB0088717C /* MainViewController.swift in Sources */,
 				72225BCB29BC31DE000D3CA0 /* TaskViewModel.swift in Sources */,
 				7237880429B6E4C90088717C /* AppContraints.swift in Sources */,
+				72149E2929C30615002FA8A9 /* CompleteView.swift in Sources */,
 				72225BC529B9DD2A000D3CA0 /* NoteViewController.swift in Sources */,
 				723787FE29B6E4950088717C /* Group.swift in Sources */,
 				7237881A29B732450088717C /* TasksView.swift in Sources */,

@@ -25,6 +25,7 @@ class TasksView: UIView {
     let addTaskView = AddTaskView()
     let datePickerView = DatePickerView()
     let timePickerView = TimePickerView()
+    let completeView = CompleteView()
     
     var pushViewController: ((TaskModel) -> Void)?
 }
@@ -62,7 +63,8 @@ extension TasksView {
         tasksTableView >>> self >>> {
             $0.snp.makeConstraints {
                 $0.top.equalTo(headerCollection.snp.bottom).offset(1)
-                $0.leading.trailing.bottom.equalToSuperview()
+                $0.leading.trailing.equalToSuperview()
+                $0.bottom.equalToSuperview()
             }
             $0.backgroundColor = .clear
             $0.dataSource = self
@@ -70,8 +72,18 @@ extension TasksView {
             $0.registerReusedCell(TaskTableViewCell.self)
             $0.showsVerticalScrollIndicator = false
             $0.separatorStyle = .none
-            $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: botSafeHeight, right: 0)
-        }        
+            $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: botSafeHeight + 150, right: 0)
+        }
+        
+        
+//        completeView >>> self >>> {
+//            $0.snp.makeConstraints {
+//                $0.top.equalTo(tasksTableView.snp.bottom).offset(-140)
+//                $0.leading.equalToSuperview().offset(PaddingScreen.topLeft)
+//                $0.width.equalTo(110)
+//                $0.height.equalTo(30)
+//            }
+//        }
     }
 }
 
@@ -182,7 +194,7 @@ extension TasksView: TaskTableViewCellDelegate {
         }
         
         vm.tasks[indexPath.row].doneCheck.toggle()
-        vm .updateTaskCheck(false, vm.tasks[indexPath.row], tasksTableView)
+        vm.updateTaskCheck(false, vm.tasks[indexPath.row], tasksTableView)
     }
     
     
