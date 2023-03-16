@@ -181,11 +181,11 @@ extension NoteViewController {
         }
         
         self.textOptions.dotListStyleBt.handle {
-            self.updateTextAttributes()
+//            self.updateTextAttributes()
         }
         
         self.textOptions.numberListStyleBt.handle {
-            self.updateTextAttributes()
+//            self.updateTextAttributes()
         }
         
         self.textOptions.linkBt.handle {
@@ -197,9 +197,7 @@ extension NoteViewController {
             })
         }
     }
-    
-    
-    
+ 
     func updateTextAttributes() {
         noteText.typingAttributes.removeAll()
         let font = selectedFont
@@ -238,6 +236,12 @@ extension NoteViewController {
 
 //MARK: Delegate
 extension NoteViewController: UITextViewDelegate {
-
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+////            if text == "\n" {
+////                textView.text.append("\n• ")
+////                return false
+////            }
+//            return true
+//        }
 }
 

@@ -24,6 +24,8 @@ class MainViewController: UIViewController {
         return v
     }()
     let addBt = UIButton()
+    
+    let manager = LocalNotificationManager()
 }
 
 //MARK: Lifecycle
@@ -33,22 +35,7 @@ extension MainViewController {
         setupView()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-//        let center = UNUserNotificationCenter.current()
-//        center.requestAuthorization(options: [.alert, .sound], completionHandler: {(granted, error) in
-//
-//        })
-//
-//        let content = UNMutableNotificationContent()
-//        content.title = "hello"
-//        content.body = "Look"
-//
-//        let date = Date().addingTimeInterval(5)
-//        let dateComponents = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute,.second], from: date)
-//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-//
-//        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-//        center.add(request)
+        self.localNoti()
         
     }
     
@@ -99,7 +86,7 @@ extension MainViewController {
             $0.titleLabel?.font = UIFont(name: FNames.regular, size: 40)
             $0.layer.cornerRadius = 60 / 2
             $0.backgroundColor = .black
-            $0.addDropShadow(color: .black, shadowOpacity: 0.5, shadowOffset: CGSize(width: 2, height: 2), shadowRadius: 10)
+            $0.addDropShadow(color: .black, shadowOpacity: 0.5, shadowOffset: CGSize(width: 0.5, height: 0.5), shadowRadius: 5)
             $0.handle {
                 self.showAddTaskView()
             }
@@ -127,15 +114,30 @@ extension MainViewController {
                              datePikerView: self.tasksView.datePickerView,
                              timePickerView: self.tasksView.timePickerView ,
                              doneHandle: {taskModel in
-            MainViewController.vm.updateTaskCheck(true, taskModel, self.tasksView.tasksTableView)
+            MainViewController.vm.updateTaskCheck(true, taskModel, self.tasksView.tasksTableView, completion: {
+                self.localNoti()
+            })
         })
+    }
+    
+    func localNoti() {
+        let tasks = MainViewController.vm.tasks
+        for task in tasks {
+            if let time = task.time {
+                let noti = Notification(id: task.id, title: "To Do", task: "Reminder: \(task.task)", datetime: time)
+                manager.notifications.append(noti)
+            }
+            manager.schedule()
+        }
     }
 }
 
 //MARK: Delegate
 extension MainViewController: TaskDetailViewControllerDelegate {
     func updateTask(taskModel: TaskModel) {
-        MainViewController.vm.updateTaskCheck(false, taskModel, self.tasksView.tasksTableView)
+        MainViewController.vm.updateTaskCheck(false, taskModel, self.tasksView.tasksTableView, completion: {
+            self.localNoti()
+        })
     }
     
     func deleteTask(taskModel: TaskModel) {

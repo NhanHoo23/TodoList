@@ -77,11 +77,14 @@ extension MainViewModel {
     }
     
     //updateTasksView
-    func updateTaskCheck(_ addTask: Bool,_ task: TaskModel, _ tableView: UITableView) {
+    func updateTaskCheck(_ addTask: Bool,_ task: TaskModel, _ tableView: UITableView, completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
             if addTask {
                 self.tasks.insert(task, at: 0)
 //                self.sortTasks()
+                if let completion = completion {
+                    completion()
+                }
                 tableView.insertRows(at: [self.selectedTaskIndexPath], with: .left)
             } else {
                 if let index = self.tasks.firstIndex(where: {$0.id == task.id}) {

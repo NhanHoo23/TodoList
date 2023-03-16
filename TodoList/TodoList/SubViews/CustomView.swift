@@ -26,8 +26,20 @@ class CustomView: UIView {
         
         if isNoti {
             label.text = notiString
+            if let time = taskModel.time {
+                if currentDate - time.timeIntervalSince1970 > 0 {
+                    label.textColor  = .red
+                } else {
+                    label.textColor  = .black
+                }
+            }
         } else {
             label.text = dateString
+            if !checkDay(taskModel.date) {
+                label.textColor = .red
+            } else {
+                label.textColor = Color.textColor
+            }
         }
     }
     
@@ -40,6 +52,7 @@ class CustomView: UIView {
     var notiString: String = ""
     var dateString: String = ""
     
+    let currentDate = Date().timeIntervalSince1970
     var doneTimeHandle: ((Date) -> Void)?
     var doneDateHandle: ((Date) -> Void)?
 }
@@ -109,6 +122,20 @@ extension CustomView {
         if !isNoti {
             self.dateString = "\(taskModel.date.getFormattedDate(format: "E, d MMM"))"
             self.label.text = dateString
+        }
+    }
+    
+    func checkDay(_ lastDate: Date) -> Bool {
+        let calendar = Calendar.current
+
+        // Replace the hour (time) of both dates with 00:00
+        let startOfLastDate =  calendar.startOfDay(for: lastDate)
+        let startOfToday = calendar.startOfDay(for: Date(timeIntervalSinceNow: 0))
+
+        if let numberOfDays = calendar.dateComponents([.day], from: startOfToday, to: startOfLastDate).day {
+            return numberOfDays >= 0
+        } else {
+            return false
         }
     }
 }

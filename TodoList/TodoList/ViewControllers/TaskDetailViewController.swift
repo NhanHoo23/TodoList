@@ -267,5 +267,5 @@ extension TaskDetailViewController {
             taskName.attributedText = attributeString
             checkBt.setImage(UIImage(systemName: "circle"), for: .normal)
         }
-    }
+    }    
 }

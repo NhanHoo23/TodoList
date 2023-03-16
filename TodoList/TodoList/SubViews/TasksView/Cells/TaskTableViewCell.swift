@@ -39,6 +39,22 @@ extension TaskTableViewCell {
         }
         lineTag.backgroundColor = task.tagColor == TagColor.none.color ? .clear : .from(task.tagColor)
         taskDate.text = task.date.getFormattedDate(format: "E, d MMM")
+        
+        if !checkDay(task.date) {
+            taskDate.textColor = .red
+        } else {
+            taskDate.textColor = Color.textColor
+        }
+        
+        let currentDate = Date().timeIntervalSince1970
+        if let time = task.time {
+            if currentDate - time.timeIntervalSince1970 > 0 {
+                bellImg.tintColor = .red
+            } else {
+                bellImg.tintColor = .black
+            }
+        }
+        
         self.showIcon(noteString: task.note, time: task.time)
         pinImg.isHidden = !task.pin
         
@@ -199,6 +215,20 @@ extension TaskTableViewCell {
                 $0.centerY.equalTo(calendarImg)
                 $0.width.height.equalTo(15)
             }
+        }
+    }
+    
+    func checkDay(_ lastDate: Date) -> Bool {
+        let calendar = Calendar.current
+
+        // Replace the hour (time) of both dates with 00:00
+        let startOfLastDate =  calendar.startOfDay(for: lastDate)
+        let startOfToday = calendar.startOfDay(for: Date(timeIntervalSinceNow: 0))
+
+        if let numberOfDays = calendar.dateComponents([.day], from: startOfToday, to: startOfLastDate).day {
+            return numberOfDays >= 0
+        } else {
+            return false
         }
     }
 }
