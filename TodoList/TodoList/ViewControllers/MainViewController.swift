@@ -12,17 +12,12 @@ import UserNotifications
 class MainViewController: UIViewController {
 
     //Variables
-    static let vm = MainViewModel()
     
     let headerView: HeaderView = {
-        let v = HeaderView(viewModel: MainViewController.vm)
+        let v = HeaderView()
        return v
     }()
     
-    let tasksView: TasksView = {
-        let v = TasksView(viewModel: MainViewController.vm)
-        return v
-    }()
     let addBt = UIButton()
     
     let manager = LocalNotificationManager()
@@ -64,18 +59,6 @@ extension MainViewController {
             }
         }
         
-        tasksView >>> view >>> {
-            $0.snp.makeConstraints {
-                $0.top.equalTo(headerView.snp.bottom).offset(16)
-                $0.leading.trailing.bottom.equalToSuperview()
-            }
-            $0.pushViewController = { taskModel in
-                let taskDetailVC = TaskDetailViewController(taskModel: taskModel)
-                taskDetailVC.delegate = self
-                self.navigationController?.pushViewController(taskDetailVC, animated: true)
-            }
-        }
-        
         addBt >>> view >>> {
             $0.snp.makeConstraints {
                 $0.bottom.equalToSuperview().offset(PaddingScreen.bottomRight - botSafeHeight)
@@ -100,50 +83,50 @@ extension MainViewController {
     @objc func keyboardWillShow(_ notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             AppManager.shared.keyboardHeight = keyboardSize.height
-            self.tasksView.addTaskView.updateUI(showKeyboard: true, keyboardHeight: keyboardSize.height)
+//            self.tasksView.addTaskView.updateUI(showKeyboard: true, keyboardHeight: keyboardSize.height)
         }
     }
     
     @objc func keyboardWillHide(_ notification: NSNotification) {
-        self.tasksView.addTaskView.updateUI(showKeyboard: false, keyboardHeight: 0)
+//        self.tasksView.addTaskView.updateUI(showKeyboard: false, keyboardHeight: 0)
         AppManager.shared.keyboardHeight = 0
     }
     
     func showAddTaskView() {
-        self.showAddTaskView(addTaskView: self.tasksView.addTaskView,
-                             datePikerView: self.tasksView.datePickerView,
-                             timePickerView: self.tasksView.timePickerView ,
-                             doneHandle: {taskModel in
-            MainViewController.vm.updateTaskCheck(true, taskModel, self.tasksView.tasksTableView, completion: {
-                self.tasksView.updateTableViewHeight()
-                self.localNoti()
-            })
-        })
+//        self.showAddTaskView(addTaskView: self.tasksView.addTaskView,
+//                             datePikerView: self.tasksView.datePickerView,
+//                             timePickerView: self.tasksView.timePickerView ,
+//                             doneHandle: {taskModel in
+//            MainViewController.vm.updateTaskCheck(true, taskModel, self.tasksView.tasksTableView, completion: {
+//                self.tasksView.updateTableViewHeight()
+//                self.localNoti()
+//            })
+//        })
     }
     
     func localNoti() {
-        let tasks = MainViewController.vm.tasks
-        for task in tasks {
-            if let time = task.time {
-                let noti = Notification(id: task.id, title: "To Do", task: "Reminder: \(task.task)", datetime: time)
-                manager.notifications.append(noti)
-            }
-            manager.schedule()
-        }
+//        let tasks = MainViewController.vm.tasks
+//        for task in tasks {
+//            if let time = task.time {
+//                let noti = Notification(id: task.id, title: "To Do", task: "Reminder: \(task.task)", datetime: time)
+//                manager.notifications.append(noti)
+//            }
+//            manager.schedule()
+//        }
     }
 }
 
 //MARK: Delegate
 extension MainViewController: TaskDetailViewControllerDelegate {
     func updateTask(taskModel: TaskModel) {
-        MainViewController.vm.updateTaskCheck(false, taskModel, self.tasksView.tasksTableView, completion: {
-            self.tasksView.tasksTableView.reloadData()
-            self.localNoti()
-        })
+//        MainViewController.vm.updateTaskCheck(false, taskModel, self.tasksView.tasksTableView, completion: {
+//            self.tasksView.tasksTableView.reloadData()
+//            self.localNoti()
+//        })
     }
     
     func deleteTask(taskModel: TaskModel) {
-        MainViewController.vm.deleteTask(taskModel, self.tasksView.tasksTableView)
+//        MainViewController.vm.deleteTask(taskModel, self.tasksView.tasksTableView)
     }
     
     

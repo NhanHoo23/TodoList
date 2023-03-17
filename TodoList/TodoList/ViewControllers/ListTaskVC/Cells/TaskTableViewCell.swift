@@ -1,8 +1,8 @@
 //
-//  TaskTableViewCell.swift
+//  Task1TableViewCell.swift
 //  TodoList
 //
-//  Created by NhanHoo23 on 08/03/2023.
+//  Created by NhanHoo23 on 17/03/2023.
 //
 
 import MTSDK
@@ -11,14 +11,13 @@ protocol TaskTableViewCellDelegate {
     func checkDoneTask(cell: TaskTableViewCell)
 }
 
-
 class TaskTableViewCell: UITableViewCell {
     
     
     //Variables
     var containerView: UIView!
     
-    let checkImg = UIImageView()
+    let checkImg = UIButton()
     let taskName = UILabel()
     let lineTag = UIView()
     let calendarImg = UIImageView()
@@ -27,25 +26,19 @@ class TaskTableViewCell: UITableViewCell {
     let bellImg = UIImageView()
     let pinImg = UIImageView()
     let horizolView = UIView()
-    let completeView = CompleteView()
     
-    var taskModel: TaskModel!
     var delegate: TaskTableViewCellDelegate?
 }
 
 
 //MARK: Functions
 extension TaskTableViewCell {
-    func configsCell(task: TaskModel, taskDoneCount: Int) {
-        self.taskModel = task
+    func configsCell(taskModel: TaskModel) {
         if containerView == nil {
             self.setupView()
         }
         
-        self.configUI(task: task)
-        self.updateUI(taskModel: task)
-        self.showIcon(noteString: task.note, time: task.time)
-        self.showCompleteView(taskModel: task, count: taskDoneCount)
+        self.updateUI(taskModel: taskModel)
     }
     
     private func setupView() {
@@ -55,11 +48,9 @@ extension TaskTableViewCell {
         containerView = UIView()
         containerView >>> contentView >>> {
             $0.snp.makeConstraints {
-                $0.top.equalToSuperview()
-                $0.leading.equalToSuperview()
-                $0.trailing.equalToSuperview()
-                $0.bottom.equalToSuperview()
+                $0.edges.equalToSuperview()
             }
+            $0.backgroundColor = .clear
         }
         
         horizolView >>> containerView >>> {
@@ -86,11 +77,13 @@ extension TaskTableViewCell {
             $0.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
                 $0.leading.equalToSuperview().offset(16)
-                $0.width.height.equalTo(30)
+                $0.width.height.equalTo(40)
             }
             $0.tintColor = .black
-            $0.isUserInteractionEnabled = true
-            $0.tapHandle {
+            $0.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+            $0.contentVerticalAlignment = .fill
+            $0.contentHorizontalAlignment = .fill
+            $0.handle {
                 self.delegate?.checkDoneTask(cell: self)
             }
         }
@@ -153,94 +146,26 @@ extension TaskTableViewCell {
             $0.contentMode = .scaleAspectFit
             $0.image = UIImage(named: "img_pin")
         }
-        
-        completeView >>> containerView >>> {
-            $0.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.leading.equalToSuperview().offset(PaddingScreen.topLeft)
-                $0.width.equalTo(110)
-                $0.height.equalTo(30)
-            }
-            $0.disable(alpha: 0)
-        }
     }
     
     func updateUI(taskModel: TaskModel) {
+        taskDate.text = taskModel.date.getFormattedDate(format: "E, d MMM")
+        
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: taskModel.task)
         attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
         if taskModel.doneCheck {
             taskName.attributedText = attributeString
-            checkImg.image = UIImage(systemName: "checkmark.circle.fill")
+            checkImg.setImage(UIImage(systemName: "checkmark.circle.fill"), for: .normal)
         } else {
             attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSMakeRange(0, attributeString.length))
             taskName.attributedText = attributeString
-            checkImg.image = UIImage(systemName: "circle")
-        }
+            checkImg.setImage(UIImage(systemName: "circle"), for: .normal)
+        }       
         
-        if taskModel.task == "" {
-            self.checkImg.isHidden = true
-            self.taskName.isHidden = true
-            self.taskDate.isHidden = true
-            self.calendarImg.isHidden = true
-            self.noteImg.isHidden = true
-            self.bellImg.isHidden = true
-            self.lineTag.isHidden = true
-            self.horizolView.isHidden = true
-        } else {
-            self.checkImg.isHidden = false
-            self.taskName.isHidden = false
-            self.taskDate.isHidden = false
-            self.calendarImg.isHidden = false
-            self.noteImg.isHidden = false
-            self.bellImg.isHidden = false
-            self.lineTag.isHidden = false
-            self.horizolView.isHidden = false
-        }
-        self.showIcon(noteString: taskModel.note, time: taskModel.time)
+        lineTag.backgroundColor = taskModel.tagColor == TagColor.none.color ? .clear : .from(taskModel.tagColor)
+        pinImg.isHidden = !taskModel.pin
         
-    }
-    
-    func showCompleteView(taskModel: TaskModel, count: Int) {
-        if taskModel.task != "" {
-            self.completeView.disable(alpha: 0)
-        } else {
-            if count > 0 {
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.completeView.enable()
-                })
-            } else {
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.completeView.disable(alpha: 0)
-                }, completion: { _ in
-                    self.completeView.isSelected = false
-                })
-            }
-        }
-    }
-    
-    func configUI(task: TaskModel) {
-        lineTag.backgroundColor = task.tagColor == TagColor.none.color ? .clear : .from(task.tagColor)
-        pinImg.isHidden = !task.pin
-        
-        if task.date == nil {
-            taskDate.text  = ""
-        } else {
-            taskDate.text = task.date.getFormattedDate(format: "E, d MMM")
-            if !checkDay(task.date) {
-                taskDate.textColor = .red
-            } else {
-                taskDate.textColor = Color.textColor
-            }
-        }
-        
-        let currentDate = Date().timeIntervalSince1970
-        if let time = task.time {
-            if currentDate - time.timeIntervalSince1970 > 0 {
-                bellImg.tintColor = .red
-            } else {
-                bellImg.tintColor = .black
-            }
-        }        
+        showIcon(noteString: taskModel.note, time: taskModel.time)
     }
     
     func showIcon(noteString: String, time: Date? = nil) {
@@ -280,20 +205,6 @@ extension TaskTableViewCell {
                 $0.centerY.equalTo(calendarImg)
                 $0.width.height.equalTo(15)
             }
-        }
-    }
-    
-    func checkDay(_ lastDate: Date) -> Bool {
-        let calendar = Calendar.current
-
-        // Replace the hour (time) of both dates with 00:00
-        let startOfLastDate =  calendar.startOfDay(for: lastDate)
-        let startOfToday = calendar.startOfDay(for: Date(timeIntervalSinceNow: 0))
-
-        if let numberOfDays = calendar.dateComponents([.day], from: startOfToday, to: startOfLastDate).day {
-            return numberOfDays >= 0
-        } else {
-            return false
         }
     }
 }

@@ -23,38 +23,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "310E15EB-CE6E-4936-A21B-1B265AA8351B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TodoList/SubViews/TasksView/TasksView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
-            landmarkName = "checkDoneTask(cell:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "608B3C5B-D792-42E1-997A-DCF59EA23064"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TodoList/SubViews/TasksView/Cells/TaskTableViewCell.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
-            landmarkName = "showCompleteView(taskModel:count:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "139DD89F-E71E-48F8-9C24-A76141B323AC"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -94,8 +62,8 @@
             filePath = "TodoList/SubViews/TasksView/Cells/TaskTableViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "updateUI(taskModel:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -103,16 +71,80 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "85888E4D-1122-4F70-AAD1-C45DA0DE0821"
+            uuid = "D51D3B5D-8610-426B-A6C5-E947D137F2CA"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TodoList/SubViews/TasksView/Cells/TaskTableViewCell.swift"
+            filePath = "TodoList/Extension/UIViewControllerExt.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
-            landmarkName = "updateUI(taskModel:)"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "showAddTaskView(addTaskView:datePikerView:timePickerView:doneHandle:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D51D3B5D-8610-426B-A6C5-E947D137F2CA - 463bca8059422c83"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__C.UIViewController.showAddTaskView(addTaskView: TodoList.AddTaskView, datePikerView: TodoList.DatePickerView, timePickerView: TodoList.TimePickerView, doneHandle: Swift.Optional&lt;(TodoList.TaskModel) -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "TodoList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/NhanHoo2310/Documents/MyProjects/TodoApp/TodoList/TodoList/Extension/UIViewControllerExt.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "12"
+                  endingLineNumber = "12"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "D51D3B5D-8610-426B-A6C5-E947D137F2CA - 97c358b05e0601ef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (TodoList.AddTaskView) -&gt; () in __C.UIViewController.showAddTaskView(addTaskView: TodoList.AddTaskView, datePikerView: TodoList.DatePickerView, timePickerView: TodoList.TimePickerView, doneHandle: Swift.Optional&lt;(TodoList.TaskModel) -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "TodoList"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/NhanHoo2310/Documents/MyProjects/TodoApp/TodoList/TodoList/Extension/UIViewControllerExt.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13"
+                  offsetFromSymbolStart = "132">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D149CE79-C3AD-4E78-AFFC-15A11B8B53F2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TodoList/Extension/UIViewControllerExt.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "showAddTaskView(addTaskView:datePikerView:timePickerView:doneHandle:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D743836E-68B3-43EE-A099-50EDB6084D4D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TodoList/ViewControllers/ListTaskVC/Cells/Task1TableViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
+            landmarkName = "showCompleteView(taskModel:count:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

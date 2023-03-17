@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,8 +15,21 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_Splash" translatesAutoresizingMaskIntoConstraints="NO" id="zuX-hx-bUh">
+                                <rect key="frame" x="137.66666666666666" y="379.66666666666669" width="117.66666666666666" height="117.66666666666669"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="zuX-hx-bUh" secondAttribute="height" id="n7x-1T-zf2"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.95686274509803915" green="0.88627450980392153" blue="0.77647058823529413" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="zuX-hx-bUh" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="MkY-M4-C3d"/>
+                            <constraint firstItem="zuX-hx-bUh" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cLb-ZE-jAx"/>
+                            <constraint firstItem="zuX-hx-bUh" firstAttribute="width" secondItem="Ze5-6b-2t3" secondAttribute="width" multiplier="0.3" id="d07-zJ-AsD"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -26,8 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="img_Splash" width="600" height="600"/>
     </resources>
 </document>

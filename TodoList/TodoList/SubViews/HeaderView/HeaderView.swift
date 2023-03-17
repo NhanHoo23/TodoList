@@ -1,23 +1,20 @@
 //
-//  HeaderView.swift
+//  Header2View.swift
 //  TodoList
 //
-//  Created by NhanHoo23 on 07/03/2023.
+//  Created by NhanHoo23 on 17/03/2023.
 //
 
 import MTSDK
 
 class HeaderView: UIView {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented")}
-    init(viewModel: MainViewModel) {
-        super.init(frame: .zero)
-        self.vm = viewModel
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.setupView()
     }
     
     //Variables
-    var vm: MainViewModel!
-    
     let appImg = UIImageView()
     let optionsBt = UIButton()
     let searchBt = UIButton()
@@ -28,7 +25,7 @@ class HeaderView: UIView {
 }
 
 
-//MARK: Functions
+//MARK: SetupView
 extension HeaderView {
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -41,7 +38,7 @@ extension HeaderView {
                 $0.top.leading.bottom.equalToSuperview()
                 $0.width.equalTo(appImg.snp.height).multipliedBy(1)
             }
-            $0.image = self.vm.appImage
+            $0.image = UIImage(named: "img_app")
         }
         
         optionsBt >>> self >>> {
@@ -72,7 +69,7 @@ extension HeaderView {
             $0.layer.borderColor = UIColor.gray.cgColor
             $0.isUserInteractionEnabled = true
             $0.tapHandle {
-                self.showPopupView(sourceView: self.sortBt)
+//                self.showPopupView(sourceView: self.sortBt)
             }
         }
         
@@ -96,52 +93,15 @@ extension HeaderView {
                 $0.trailing.equalToSuperview().offset(-8)
                 $0.top.equalToSuperview().offset(4)
             }
-            $0.text = self.vm.sortType
+            $0.text = AppManager.shared.sortType
             $0.textColor = Color.textColor
         }
     }
+
 }
+
 
 //MARK: Functions
 extension HeaderView {
-    func showPopupView(sourceView: UIView) {
-        let popupView = ImportViewController()
-        popupView.sourceView = sourceView
-        
-        let byCreationBt = ImportAction(title: "By Creation", handler: { _ in
-            DispatchQueue.main.async {
-                self.vm.updateSortButtonLabel(SortType.byCreation.title, self.sortType)
-//                self.vm.sortTasks()
-                if let sortHandle = self.sortHandle {
-                    sortHandle()
-                }
-            }
-        })
-        let byScheduledBt = ImportAction(title: "By Schedule", handler: { _ in
-            DispatchQueue.main.async {
-                self.vm.updateSortButtonLabel(SortType.byScheduled.title, self.sortType)
-//                self.vm.sortTasks()
-                if let sortHandle = self.sortHandle {
-                    sortHandle()
-                }
-            }
-        })
-        let byAlphabeticalBt = ImportAction(title: "By Alphabetical", handler: {_ in
-            DispatchQueue.main.async {
-                self.vm.updateSortButtonLabel(SortType.byAlphabetical.title, self.sortType)
-//                self.vm.sortTasks()
-                if let sortHandle = self.sortHandle {
-                    sortHandle()
-                }
-            }
-        })
-        
-        popupView.addAction(byCreationBt)
-        popupView.addAction(byScheduledBt)
-        popupView.addAction(byAlphabeticalBt)
-        
-        if let vc = self.window?.rootViewController {
-            vc.present(popupView, animated: true)
-        }
-    }
+
 }
