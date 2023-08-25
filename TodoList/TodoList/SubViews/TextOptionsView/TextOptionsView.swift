@@ -5,7 +5,7 @@
 //  Created by NhanHoo23 on 13/03/2023.
 //
 
-import MTSDK
+import MiTu
 
 enum TextFont {
     case regular

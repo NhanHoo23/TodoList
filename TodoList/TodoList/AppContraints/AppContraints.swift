@@ -5,7 +5,7 @@
 //  Created by NhanHoo23 on 07/03/2023.
 //
 
-import MTSDK
+import MiTu
 
 struct Color {
     static let mainBackground: UIColor = .from("F4E2C6")

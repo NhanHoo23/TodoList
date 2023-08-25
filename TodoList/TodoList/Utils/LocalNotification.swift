@@ -5,7 +5,7 @@
 //  Created by NhanHoo23 on 16/03/2023.
 //
 
-import MTSDK
+import MiTu
 import UserNotifications
 
 struct Notification {

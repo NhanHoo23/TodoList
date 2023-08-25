@@ -5,7 +5,7 @@
 //  Created by NhanHoo23 on 07/03/2023.
 //
 
-import MTSDK
+import MiTu
 
 //MARK: Init and Variables
 class LoadingViewController: UIViewController {

@@ -7,7 +7,7 @@ target 'TodoList' do
 
   # Pods for TodoList
 	
-	pod 'MTSDK'
+	pod 'MiTu'
   pod 'RealmSwift'
 
 end

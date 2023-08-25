@@ -1,26 +1,26 @@
 PODS:
-  - MTSDK (4.0.2)
-  - Realm (10.36.0):
-    - Realm/Headers (= 10.36.0)
-  - Realm/Headers (10.36.0)
-  - RealmSwift (10.36.0):
-    - Realm (= 10.36.0)
+  - MiTu (1.0.0)
+  - Realm (10.42.0):
+    - Realm/Headers (= 10.42.0)
+  - Realm/Headers (10.42.0)
+  - RealmSwift (10.42.0):
+    - Realm (= 10.42.0)
 
 DEPENDENCIES:
-  - MTSDK
+  - MiTu
   - RealmSwift
 
 SPEC REPOS:
   trunk:
-    - MTSDK
+    - MiTu
     - Realm
     - RealmSwift
 
 SPEC CHECKSUMS:
-  MTSDK: c8ed8a344627e1059a5aa4f1a329de0039fd6f1b
-  Realm: 3fd136cb4c83a927482a7f1612496d37beed3cf5
-  RealmSwift: 513d4dcbf5bfc4d573454088b592685fc48dd716
+  MiTu: e5e54c622b173d5d58b10d690a2780a5d77a9346
+  Realm: 490aad28f1360e58fc22256d5d686d3a36525346
+  RealmSwift: f6a9b56d747bbdd7931de1835896c5f024b6898a
 
-PODFILE CHECKSUM: 783068a7e55e92d096e1915706348b688c666b3d
+PODFILE CHECKSUM: d4544036a6569d72be3e5e62345c54b247955d34
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1

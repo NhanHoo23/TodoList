@@ -5,7 +5,7 @@
 //  Created by NhanHoo23 on 14/03/2023.
 //
 
-import MTSDK
+import MiTu
 
 class CustomView: UIView {
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented")}
